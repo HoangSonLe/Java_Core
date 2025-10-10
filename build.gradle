@@ -1,12 +1,12 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.6'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'java-library'
+	id 'org.springframework.boot' version '3.5.6' apply false
+	id 'maven-publish'
+	id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-description = 'Demo project for Spring Boot'
+version = '1.0.0'
 
 java {
 	toolchain {
@@ -19,11 +19,47 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+	// CẦU NỐI QUAN TRỌNG
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation platform('org.springframework.boot:spring-boot-dependencies:3.5.6')
 	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'com.nimbusds:nimbus-jose-jwt:9.37'
+	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+spotless {
+	java {
+		target 'src/**/*.java'           // các file cần format
+		googleJavaFormat('1.17.0')       // chuẩn Google Java Format
+		importOrder()                    // sắp xếp import
+		removeUnusedImports()            // xoá import không dùng
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+	repositories {
+		mavenLocal() // publish vào ~/.m2/repository
+	}
 }
