@@ -2,10 +2,10 @@ package com.example.core;
 
 import com.example.core.security.CustomAccessDeniedHandler;
 import com.example.core.security.CustomAuthenticationEntryPoint;
+import com.example.core.security.CustomPasswordEncoder;
 import com.example.core.security.models.JwtProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -28,6 +28,6 @@ public class CoreBeansConfig {
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder(10);
+    return new CustomPasswordEncoder();
   }
 }

@@ -115,7 +115,6 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
-  // Bắt lỗi chung cho mọi Exception
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiErrorResponse> handleException(
       final Exception exception, final HttpServletRequest request) {

@@ -7,27 +7,27 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "aes")
 @Getter
 @Setter
 @ToString
 public class AesAlgorithm {
-
+  @Value("${aes.secret-key}")
   private String secretKey; // từ application.yml
 
   private static final String ALGORITHM = "AES";
   private static final String TRANSFORMATION = "AES/GCM/NoPadding";
   private static final Charset CHARSET = StandardCharsets.UTF_8;
-  private static final int IV_SIZE = 16;
+  private static final int IV_SIZE = 12; // chuẩn GCM là 12 bytes
+  private static final int GCM_TAG_LENGTH = 128; // 16 bytes = 128 bits
 
   /** Encrypt với IV ngẫu nhiên, trả về Base64 (IV + cipherText) */
   public String encrypt(String plainText) {
@@ -39,7 +39,7 @@ public class AesAlgorithm {
       cipher.init(
           Cipher.ENCRYPT_MODE,
           new SecretKeySpec(secretKey.getBytes(CHARSET), ALGORITHM),
-          new IvParameterSpec(iv));
+          new GCMParameterSpec(GCM_TAG_LENGTH, iv));
 
       byte[] encrypted = cipher.doFinal(plainText.getBytes(CHARSET));
 
@@ -55,7 +55,7 @@ public class AesAlgorithm {
   }
 
   /** Decrypt từ Base64 (lấy IV từ đầu) */
-  public String decrypt(String cipherText) throws Exception {
+  public String decrypt(String cipherText) {
     try {
       byte[] combined = Base64.getDecoder().decode(cipherText);
 
@@ -66,7 +66,7 @@ public class AesAlgorithm {
       cipher.init(
           Cipher.DECRYPT_MODE,
           new SecretKeySpec(secretKey.getBytes(CHARSET), ALGORITHM),
-          new IvParameterSpec(iv));
+          new GCMParameterSpec(GCM_TAG_LENGTH, iv));
 
       byte[] decrypted = cipher.doFinal(encrypted);
       return new String(decrypted, CHARSET);
