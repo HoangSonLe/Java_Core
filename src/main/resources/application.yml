@@ -1,3 +1,12 @@
+core:
+  async:
+    enable: true
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 200
+    keep-alive-seconds: 60
+    thread-name-prefix: "app-async-"
+
 security:
   permit-all:
     - /v1/auth/login
