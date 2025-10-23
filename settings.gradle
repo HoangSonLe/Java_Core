@@ -1,1 +1,24 @@
-rootProject.name = 'core'
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		mavenCentral()
+	}
+}
+
+dependencyResolutionManagement {
+	repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+	repositories {
+		mavenCentral()
+	}
+}
+
+rootProject.name = "core"
+
+include("core-common")
+include("core-database-async")
+include("core-database-sync")
+
+// Khai báo rõ vị trí thư mục cho chắc chắn
+project(":core-common").projectDir = file("core-common")
+project(":core-database-async").projectDir = file("core-database-async")
+project(":core-database-sync").projectDir = file("core-database-sync")

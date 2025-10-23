@@ -1,0 +1,48 @@
+plugins {
+	id 'java-library'
+}
+
+sourceSets {
+	main {
+		java { srcDirs = ['main/java'] }
+		resources { srcDirs = ['main/resources'] }
+	}
+	test {
+		java { srcDirs = ['test/java'] }
+		resources { srcDirs = ['test/resources'] }
+	}
+}
+
+dependencies {
+	// Align Spring dependencies using Spring Boot BOM
+	implementation platform('org.springframework.boot:spring-boot-dependencies:3.3.4')
+
+	// ===== Lombok + MapStruct =====
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// ===== Common Utils =====
+	implementation 'org.apache.commons:commons-lang3:3.14.0'
+	implementation 'org.apache.commons:commons-collections4:4.4'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// ===== Spring Web / Servlet / HTTP =====
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// ===== Spring Security & OAuth2 JWT =====
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+	// ===== Spring Data JPA (annotations like AuditingEntityListener, PageRequest, Sort) =====
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// ===== Caffeine Cache =====
+	implementation 'com.github.ben-manes.caffeine:caffeine'
+
+	// ===== Swagger/OpenAPI annotations =====
+ 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.22'
+}

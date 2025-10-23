@@ -1,0 +1,66 @@
+spring:
+  profiles:
+    active: async
+core:
+  database:
+    mode: async   # hoặc sync
+  async:
+    enable: true
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 200
+    keep-alive-seconds: 60
+    thread-name-prefix: "app-async-"
+
+security:
+  permit-all:
+    - /v1/auth/login
+    - /v1/auth/refresh-token
+
+jwt:
+  privateKey: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCU3i10uj6OwIEq
+    LGq0MutqQgP/4sUNOdt25BWFE4lt8Fbof79qn/UWVjjbN6A5S8k3JuY8nyPRxJWh
+    eNUuvNcDJMjGLlivTkgWH1vFwQC7uz3qy3i4f4UUVru3C3nGZLhfOxO5A5i4VEwA
+    xhnTkkUHXwK3Vr231Skf9N6npeg/SDbhYR0CntxIpWJgdYb3AH2ntju5oZVUPRDu
+    SBpRtO9mrzDNWm/qhqs8CLlyhQh5cYRi2HinpDOD81y00bCXCGFFfT4IVZ78X3PJ
+    Pd9FFO2IPeTznNRX60cNUq7eeWnaDXIMf8LgMxys2oxZkkEF5F0jjGxkv5xc69y+
+    WN9p59TXAgMBAAECggEAKQAwQM/y3tpCON1W3h6QHAnmlBle8E+ZFFupWaeR2Eez
+    iAF3NOStWeORcT8Wz/EBkEEUdGnYMbQVCg3/mQnFpkYBTiQBpPbIf99PJV4M16ew
+    W/SCYT4t5vYkaTut5GhlJ0VcHz7QVyRQcn4dKtpETM1sMBah1fnNg9GraT0WhCbx
+    4pV3vF05nWJGV1pFQBy4HuUU9mlf8zS7aXeYa8bknYG9VBnI3T+6x4G8+evPYUT3
+    bAQCiKT+al1F6uTGGh+E+ng/z9PcIejzBeknHYi/giR8Mh8f/HSx9tsFQO8MVy+Z
+    HrvRNTUXyB61CJjS000zPBcOW2qYjCAMqyK0+4hxcQKBgQDMFNG3ht1o7vA8zwrw
+    o1S6oWgsTNnZ/sf6OQrI7XcfLi/Bt91nJFjp473G6/7XQUeV0NHonFCTKCmIuZhs
+    MhWrdwRwJsON3lprxJE54Ctvt5lErKZI2g56fwjXHi27llOFYL6YwDhh4n/OR3KQ
+    WQARTaFiUIQL3dUJnC77qF5UQwKBgQC6vXqSTbRf04Li/8dHEVo8UlYPtzw5cHOp
+    Yki49qV0tRpiNUyD7FJ1wuIvqIYA7P1qmXcqoLT2WAxtNdE8d7QBqAwhpNDluJjc
+    H9iga6L87+4zqBF9oHV8Qk+vPuMinfyUVegjyOvEVRy/RaNJXaqJQd+ojR0SZqEn
+    G3prB0Sd3QKBgAp9s340v6MKTW1C03QlYVCqxXkphjVvpIYXcpd7pZkDvc6+jfIk
+    azGy1GmqbhJQt8Za0r+bcYTvFpuBtvUw6e5DkwXU6E6dtJY/p5uLC5CVpppiKbYr
+    B32ClEjCs2UmSCreG04s63kUtK88+wWynY9GJ1qveupFQBNbZQroz9iTAoGAZXmj
+    iq85Dj2kyW/OvVq7mz3u0Fl1G410/J2RARnerT3gmW93JdUctitxuA4uy3/88Zl1
+    fS+ZRqhwEESHcAFoSuIjvYCPl9WpEy0nDX2QMzy6R03UO10fmqd6H7Pfv6b0YzMP
+    k6qSG71YgsP3yF1i13V5cWFFZANrHRI8gr6PVe0CgYEApsj/JrM4LWSKmPumn8bs
+    oRM3JqvrGWjqHLUXLov3zojICxWFFhpMHqa8YgrYtBDnowyMs0ikuho4uMkBGCXD
+    e9ws64yoIO4BOQUmPY/ix/jtk7xvam/NHmmj/bD71djmEU9lwgJJrAmRNzGyCZZ4
+    /KvNps4gWk3V9soJYod1Gh0=
+    -----END PRIVATE KEY-----
+  public-key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlN4tdLo+jsCBKixqtDLr
+    akID/+LFDTnbduQVhROJbfBW6H+/ap/1FlY42zegOUvJNybmPJ8j0cSVoXjVLrzX
+    AyTIxi5Yr05IFh9bxcEAu7s96st4uH+FFFa7twt5xmS4XzsTuQOYuFRMAMYZ05JF
+    B18Ct1a9t9UpH/Tep6XoP0g24WEdAp7cSKViYHWG9wB9p7Y7uaGVVD0Q7kgaUbTv
+    Zq8wzVpv6oarPAi5coUIeXGEYth4p6Qzg/NctNGwlwhhRX0+CFWe/F9zyT3fRRTt
+    iD3k85zUV+tHDVKu3nlp2g1yDH/C4DMcrNqMWZJBBeRdI4xsZL+cXOvcvljfaefU
+    1wIDAQAB
+    -----END PUBLIC KEY-----
+  jwtRefreshExpirationS: 60
+  jwtAccessTokenExpirationS: 30
+  issuer: CoreJavaHSTM
+
+aes:
+  secret-key: TMySecretKey1801
+

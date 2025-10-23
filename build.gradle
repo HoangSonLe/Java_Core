@@ -1,6 +1,5 @@
 plugins {
 	id 'java-library'
-	id 'org.springframework.boot' version '3.5.6' apply false
 	id 'maven-publish'
 	id 'com.diffplug.spotless' version '6.25.0'
 }
@@ -8,63 +7,49 @@ plugins {
 group = 'com.example'
 version = '1.0.0'
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+allprojects {
+	repositories {
+		mavenCentral()
 	}
 }
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
 
-repositories {
-	mavenCentral()
-}
+subprojects {
+	apply plugin: 'java-library'
+	apply plugin: 'maven-publish'
+	apply plugin: 'com.diffplug.spotless'
 
-dependencies {
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	group = rootProject.group
+	version = rootProject.version
 
-	// Lombok
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-
-	// CẦU NỐI QUAN TRỌNG
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation platform('org.springframework.boot:spring-boot-dependencies:3.5.6')
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	implementation 'com.nimbusds:nimbus-jose-jwt:9.37'
-	implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
-
-}
-
-spotless {
 	java {
-		target 'src/**/*.java'           // các file cần format
-		googleJavaFormat('1.17.0')       // chuẩn Google Java Format
-		importOrder()                    // sắp xếp import
-		removeUnusedImports()            // xoá import không dùng
-		trimTrailingWhitespace()
-		endWithNewline()
-	}
-}
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
 		}
 	}
-	repositories {
-		mavenLocal() // publish vào ~/.m2/repository
+
+	tasks.withType(JavaCompile) {
+		options.encoding = 'UTF-8'
+	}
+
+	spotless {
+		java {
+			target '**/main/java/**/*.java', '**/test/java/**/*.java'
+			googleJavaFormat('1.17.0')
+			importOrder()
+			removeUnusedImports()
+			trimTrailingWhitespace()
+			endWithNewline()
+		}
+	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				from components.java
+			}
+		}
+		repositories {
+			mavenLocal()
+		}
 	}
 }

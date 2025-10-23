@@ -1,0 +1,17 @@
+plugins {
+	id 'java-library'
+}
+
+dependencies {
+	implementation project(":core-common")
+
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	// ===== Spring Boot & Database Sync (JPA) =====
+	implementation platform('org.springframework.boot:spring-boot-dependencies:3.3.4')
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql'
+
+	// Chỉ dùng annotation, tránh autoconfig nếu không bật profile sync
+	compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
+}
